@@ -3,15 +3,6 @@ import { create as createBasicSubject } from '@liquid-bricks/lib-nats-subject/cr
 import { events as natsEvents } from '@liquid-bricks/lib-nats-subject/events/nats'
 import { createDomainProjectorRouter } from './router.js'
 
-const domainEdgeSubjectSpec = natsEvents['*']?.domain?.['*']?.['*']?.edge?.['>'] ?? {
-  env: '*',
-  ns: 'domain',
-  tenant: '*',
-  context: '*',
-  channel: 'edge',
-  entity: '>',
-}
-
 const consumerName = 'domainProjectorConsumer'
 
 export async function Consumer({ streamName, natsContext, g, diagnostics: d }) {
@@ -29,7 +20,7 @@ export async function Consumer({ streamName, natsContext, g, diagnostics: d }) {
     ack_policy: AckPolicy.Explicit,
     deliver_policy: DeliverPolicy.All,
     filter_subjects: [
-      createBasicSubject(domainEdgeSubjectSpec).forSubscribe().build(),
+      createBasicSubject(natsEvents['*'].domain['*']['*'].edge['>']).forSubscribe().build(),
     ],
   })
 
