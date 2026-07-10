@@ -6,6 +6,7 @@ import * as domain from './core/domain/index.js'
 export const routes = [
   [domain.edge.has_data_state.result_computed.path, domain.edge.has_data_state.result_computed.spec],
   [domain.edge.has_task_state.result_computed.path, domain.edge.has_task_state.result_computed.spec],
+  [domain.edge.uses_gate.result_computed.path, domain.edge.uses_gate.result_computed.spec],
 ]
 
 export function createDomainProjectorRouter({
