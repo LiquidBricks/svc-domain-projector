@@ -1,13 +1,9 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
 
-import { spec as legacySpec } from '../../../../../../core/domain/edge/uses_gate/result_computed/index.js'
 import { spec } from '../../../../../../core/domain/vertex/gateInstanceRef/result_computed/index.js'
 
-test('vertex gate projection shares legacy semantics, mutates the gate ref, and acknowledges', async () => {
-  assert.equal(spec.handler, legacySpec.handler)
-  assert.equal(spec.pre[0], legacySpec.pre[0])
-
+test('vertex gate projection mutates the gate ref and acknowledges', async () => {
   const calls = []
   const dataMapper = {
     vertex: {

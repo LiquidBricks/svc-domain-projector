@@ -1,7 +1,6 @@
 import { AckPolicy, DeliverPolicy } from '@nats-io/jetstream'
 import { create as createBasicSubject } from '@liquid-bricks/lib-nats-subject/create/basic'
 import { events as natsEvents } from '@liquid-bricks/lib-nats-subject/events/nats'
-import { subjectDefinition as stateMachineCompletedSubjectDefinition } from './core/domain/vertex/stateMachine/completed/subjectDefinition.js'
 import { createDomainProjectorRouter } from './router.js'
 
 const consumerName = 'domainProjectorConsumer'
@@ -21,9 +20,13 @@ export async function Consumer({ streamName, natsContext, g, diagnostics: d }) {
     ack_policy: AckPolicy.Explicit,
     deliver_policy: DeliverPolicy.All,
     filter_subjects: [
-      createBasicSubject(natsEvents['*'].domain['*']['*'].edge['>']).forSubscribe().build(),
+      createBasicSubject(natsEvents['*'].domain['*']['*'].edge.has_data_state.result_computed.v1['*']).forSubscribe().build(),
+      createBasicSubject(natsEvents['*'].domain['*']['*'].edge.has_data_state.started.v1['*']).forSubscribe().build(),
+      createBasicSubject(natsEvents['*'].domain['*']['*'].edge.has_task_state.result_computed.v1['*']).forSubscribe().build(),
+      createBasicSubject(natsEvents['*'].domain['*']['*'].edge.has_task_state.started.v1['*']).forSubscribe().build(),
       createBasicSubject(natsEvents['*'].domain['*']['*'].vertex.gateInstanceRef.result_computed.v1['*']).forSubscribe().build(),
-      createBasicSubject(stateMachineCompletedSubjectDefinition).forSubscribe().build(),
+      createBasicSubject(natsEvents['*'].domain['*']['*'].vertex.stateMachine.completed.v1['*']).forSubscribe().build(),
+      createBasicSubject(natsEvents['*'].domain['*']['*'].vertex.stateMachine.started.v1['*']).forSubscribe().build(),
     ],
   })
 
