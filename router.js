@@ -7,6 +7,8 @@ export const routes = [
   [domain.edge.has_data_state.result_computed.path, domain.edge.has_data_state.result_computed.spec],
   [domain.edge.has_task_state.result_computed.path, domain.edge.has_task_state.result_computed.spec],
   [domain.edge.uses_gate.result_computed.path, domain.edge.uses_gate.result_computed.spec],
+  [domain.vertex.gateInstanceRef.result_computed.path, domain.vertex.gateInstanceRef.result_computed.spec],
+  [domain.vertex.stateMachine.completed.path, domain.vertex.stateMachine.completed.spec],
 ]
 
 export function createDomainProjectorRouter({

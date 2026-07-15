@@ -1,6 +1,7 @@
 import { AckPolicy, DeliverPolicy } from '@nats-io/jetstream'
 import { create as createBasicSubject } from '@liquid-bricks/lib-nats-subject/create/basic'
 import { events as natsEvents } from '@liquid-bricks/lib-nats-subject/events/nats'
+import { subjectDefinition as stateMachineCompletedSubjectDefinition } from './core/domain/vertex/stateMachine/completed/subjectDefinition.js'
 import { createDomainProjectorRouter } from './router.js'
 
 const consumerName = 'domainProjectorConsumer'
@@ -21,6 +22,8 @@ export async function Consumer({ streamName, natsContext, g, diagnostics: d }) {
     deliver_policy: DeliverPolicy.All,
     filter_subjects: [
       createBasicSubject(natsEvents['*'].domain['*']['*'].edge['>']).forSubscribe().build(),
+      createBasicSubject(natsEvents['*'].domain['*']['*'].vertex.gateInstanceRef.result_computed.v1['*']).forSubscribe().build(),
+      createBasicSubject(stateMachineCompletedSubjectDefinition).forSubscribe().build(),
     ],
   })
 
