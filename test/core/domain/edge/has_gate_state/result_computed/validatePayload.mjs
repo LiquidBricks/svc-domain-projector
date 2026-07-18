@@ -3,7 +3,7 @@ import assert from 'node:assert/strict'
 
 import { diagnostics as makeDiagnostics } from '@liquid-bricks/lib-diagnostics'
 
-import { validatePayload } from '../../../../../../core/domain/vertex/gateInstanceRef/result_computed/validatePayload.js'
+import { validatePayload } from '../../../../../../core/domain/edge/has_gate_state/result_computed/validatePayload.js'
 
 const noop = () => {}
 
@@ -24,7 +24,7 @@ test('gate validation preserves a supplied updatedAt', () => {
     validatePayload({
       scope: {
         handlerDiagnostics,
-        gateInstanceRefId: 'gate-instance-ref-1',
+        stateEdgeId: 'gate-state-edge-1',
         updatedAt,
       },
     }),
@@ -39,7 +39,7 @@ test('gate validation defaults updatedAt', () => {
   const result = validatePayload({
     scope: {
       handlerDiagnostics,
-      gateInstanceRefId: 'gate-instance-ref-1',
+      stateEdgeId: 'gate-state-edge-1',
     },
   })
 
@@ -49,14 +49,14 @@ test('gate validation defaults updatedAt', () => {
   assert.ok(timestamp <= Date.now())
 })
 
-test('gate validation rejects a missing gateInstanceRefId', () => {
+test('gate validation rejects a missing stateEdgeId', () => {
   const handlerDiagnostics = makeDiagnosticsInstance()
 
   assert.throws(
     () => validatePayload({
       scope: {
         handlerDiagnostics,
-        gateInstanceRefId: '',
+        stateEdgeId: '',
       },
     }),
     handlerDiagnostics.DiagnosticError,

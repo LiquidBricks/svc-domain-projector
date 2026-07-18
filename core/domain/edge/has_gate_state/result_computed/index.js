@@ -8,7 +8,8 @@ export { path }
 export const spec = {
   decode: [
     decodeData([
-      'gateInstanceRefId',
+      'stateEdgeId',
+      'stateId',
       'result',
       'resultValue',
       'updatedAt',

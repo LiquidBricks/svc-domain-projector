@@ -8,7 +8,7 @@ export const routes = [
   [domain.edge.has_data_state.started.path, domain.edge.has_data_state.started.spec],
   [domain.edge.has_task_state.result_computed.path, domain.edge.has_task_state.result_computed.spec],
   [domain.edge.has_task_state.started.path, domain.edge.has_task_state.started.spec],
-  [domain.vertex.gateInstanceRef.result_computed.path, domain.vertex.gateInstanceRef.result_computed.spec],
+  [domain.edge.has_gate_state.result_computed.path, domain.edge.has_gate_state.result_computed.spec],
   [domain.vertex.stateMachine.completed.path, domain.vertex.stateMachine.completed.spec],
   [domain.vertex.stateMachine.started.path, domain.vertex.stateMachine.started.spec],
 ]

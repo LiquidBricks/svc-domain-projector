@@ -1,7 +1,7 @@
 export async function projectGateResultComputed({
   rootCtx: { dataMapper },
   scope: {
-    gateInstanceRefId,
+    stateEdgeId,
     result,
     resultValue,
     updatedAt,
@@ -11,11 +11,11 @@ export async function projectGateResultComputed({
     ? resultValue
     : (result != null ? JSON.stringify(result) : '')
 
-  await dataMapper.vertex.gateInstanceRef.setResultAndUpdatedAt({
-    gateInstanceRefId,
+  await dataMapper.edge.has_gate_state.stateMachine_gateInstanceRef.setResultAndUpdatedAt({
+    edgeId: stateEdgeId,
     result: projectedResult,
     updatedAt,
   })
 
-  return { gateInstanceRefId }
+  return { stateEdgeId }
 }
