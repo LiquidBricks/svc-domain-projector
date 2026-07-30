@@ -1,6 +1,6 @@
 import router from '@liquid-bricks/lib-nats-subject/router'
 import { dataMapper as createDataMapper } from '@liquid-bricks/spec-domain/domain'
-import { Errors } from './errors.js'
+import { DOMAIN_PROJECTOR_ROUTER_HANDLER_ERROR, DOMAIN_PROJECTOR_ROUTER_UNKNOWN_SUBJECT } from '@liquid-bricks/lib-diagnostics/codes'
 import * as domain from './core/domain/index.js'
 
 export const routes = [
@@ -37,7 +37,7 @@ export function createDomainProjectorRouter({
       handler: async ({ message, rootCtx: { diagnostics } }) => {
         diagnostics.invariant(
           false,
-          Errors.ROUTER_UNKNOWN_SUBJECT,
+          DOMAIN_PROJECTOR_ROUTER_UNKNOWN_SUBJECT,
           `No handler for subject: ${message.subject}`,
           { subject: message.subject, message: message?.json?.() },
         )
@@ -46,7 +46,7 @@ export function createDomainProjectorRouter({
     .error(({ error, rootCtx: { diagnostics } }, ...rest) => {
       if (error instanceof diagnostics.DiagnosticError) return
       throw diagnostics.error(
-        Errors.ROUTER_HANDLER_ERROR,
+        DOMAIN_PROJECTOR_ROUTER_HANDLER_ERROR,
         'domain projector router error',
         { error, rest },
       )

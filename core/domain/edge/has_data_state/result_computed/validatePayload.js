@@ -1,4 +1,4 @@
-import { Errors } from '../../../../../errors.js'
+import { DOMAIN_PROJECTOR_PRECONDITION_REQUIRED } from '@liquid-bricks/lib-diagnostics/codes'
 
 export function validatePayload({
   scope: {
@@ -11,7 +11,7 @@ export function validatePayload({
 }) {
   handlerDiagnostics.require(
     typeof stateEdgeId === 'string' && stateEdgeId.length,
-    Errors.PRECONDITION_REQUIRED,
+    DOMAIN_PROJECTOR_PRECONDITION_REQUIRED,
     'stateEdgeId required for data result_computed projection',
     { field: 'stateEdgeId' },
   )
@@ -19,7 +19,7 @@ export function validatePayload({
   const normalizedStatus = stateEdgeStatus ?? status
   handlerDiagnostics.require(
     typeof normalizedStatus === 'string' && normalizedStatus.length,
-    Errors.PRECONDITION_REQUIRED,
+    DOMAIN_PROJECTOR_PRECONDITION_REQUIRED,
     'status required for data result_computed projection',
     { field: 'status' },
   )

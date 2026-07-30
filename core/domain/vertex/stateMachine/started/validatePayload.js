@@ -1,4 +1,4 @@
-import { Errors } from '../../../../../errors.js'
+import { DOMAIN_PROJECTOR_PRECONDITION_REQUIRED } from '@liquid-bricks/lib-diagnostics/codes'
 
 export function validatePayload({
   scope: {
@@ -9,13 +9,13 @@ export function validatePayload({
 }) {
   handlerDiagnostics.require(
     typeof stateMachineId === 'string' && stateMachineId.length,
-    Errors.PRECONDITION_REQUIRED,
+    DOMAIN_PROJECTOR_PRECONDITION_REQUIRED,
     'stateMachineId required for stateMachine started projection',
     { field: 'stateMachineId' },
   )
   handlerDiagnostics.require(
     typeof updatedAt === 'string' && updatedAt.length,
-    Errors.PRECONDITION_REQUIRED,
+    DOMAIN_PROJECTOR_PRECONDITION_REQUIRED,
     'updatedAt required for stateMachine started projection',
     { field: 'updatedAt' },
   )
