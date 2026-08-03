@@ -4,6 +4,7 @@ export async function projectGateResultComputed({
     stateEdgeId,
     result,
     resultValue,
+    status,
     updatedAt,
   },
 }) {
@@ -11,9 +12,10 @@ export async function projectGateResultComputed({
     ? resultValue
     : (result != null ? JSON.stringify(result) : '')
 
-  await dataMapper.edge.has_gate_state.stateMachine_gateInstanceRef.setResultAndUpdatedAt({
+  await dataMapper.edge.has_gate_state.stateMachine_gateInstanceRef.updateResultStatusUpdatedAt({
     edgeId: stateEdgeId,
     result: projectedResult,
+    status,
     updatedAt,
   })
 

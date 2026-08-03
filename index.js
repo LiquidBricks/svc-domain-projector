@@ -20,10 +20,13 @@ export async function Consumer({ streamName, natsContext, g, diagnostics: d }) {
     ack_policy: AckPolicy.Explicit,
     deliver_policy: DeliverPolicy.All,
     filter_subjects: [
+      createBasicSubject(natsEvents['*'].domain['*']['*'].edge.has_data_state.computation_failed.v1['*']).forSubscribe().build(),
       createBasicSubject(natsEvents['*'].domain['*']['*'].edge.has_data_state.result_computed.v1['*']).forSubscribe().build(),
       createBasicSubject(natsEvents['*'].domain['*']['*'].edge.has_data_state.started.v1['*']).forSubscribe().build(),
+      createBasicSubject(natsEvents['*'].domain['*']['*'].edge.has_task_state.computation_failed.v1['*']).forSubscribe().build(),
       createBasicSubject(natsEvents['*'].domain['*']['*'].edge.has_task_state.result_computed.v1['*']).forSubscribe().build(),
       createBasicSubject(natsEvents['*'].domain['*']['*'].edge.has_task_state.started.v1['*']).forSubscribe().build(),
+      createBasicSubject(natsEvents['*'].domain['*']['*'].edge.has_gate_state.computation_failed.v1['*']).forSubscribe().build(),
       createBasicSubject(natsEvents['*'].domain['*']['*'].edge.has_gate_state.result_computed.v1['*']).forSubscribe().build(),
       createBasicSubject(natsEvents['*'].domain['*']['*'].vertex.stateMachine.completed.v1['*']).forSubscribe().build(),
       createBasicSubject(natsEvents['*'].domain['*']['*'].vertex.stateMachine.started.v1['*']).forSubscribe().build(),

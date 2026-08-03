@@ -36,6 +36,7 @@ export const spec = {
       'resultValue',
       'status',
       'stateEdgeStatus',
+      'error',
       'updatedAt',
     ]),
   ],

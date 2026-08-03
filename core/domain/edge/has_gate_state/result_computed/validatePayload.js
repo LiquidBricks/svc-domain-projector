@@ -1,12 +1,15 @@
 import { DOMAIN_PROJECTOR_PRECONDITION_REQUIRED } from '@liquid-bricks/lib-diagnostics/codes'
+import { validateProvidedResult } from '../../_shared/validateProvidedResult.js'
+import { validateUpdatedAt } from '../../_shared/validateUpdatedAt.js'
 
-export function validatePayload({
-  scope: {
+export function validatePayload({ scope }) {
+  const {
     handlerDiagnostics,
     stateEdgeId,
-    updatedAt,
-  },
-}) {
+    status,
+    stateEdgeStatus,
+  } = scope
+
   handlerDiagnostics.require(
     typeof stateEdgeId === 'string' && stateEdgeId.length,
     DOMAIN_PROJECTOR_PRECONDITION_REQUIRED,
@@ -14,7 +17,22 @@ export function validatePayload({
     { field: 'stateEdgeId' },
   )
 
+  const normalizedStatus = validateProvidedResult({
+    handlerDiagnostics,
+    hasResult: Object.prototype.hasOwnProperty.call(scope, 'result'),
+    hasError: Object.prototype.hasOwnProperty.call(scope, 'error'),
+    status,
+    stateEdgeStatus,
+    type: 'gate state',
+  })
+
   return {
-    updatedAt: updatedAt || new Date().toISOString(),
+    status: normalizedStatus,
+    updatedAt: validateUpdatedAt({
+      handlerDiagnostics,
+      scope,
+      type: 'gate state',
+      event: 'result_computed',
+    }),
   }
 }

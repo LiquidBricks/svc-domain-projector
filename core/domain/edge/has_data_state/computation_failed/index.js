@@ -2,23 +2,12 @@ import { ackMessage, decodeData } from '../../../../../middleware/index.js'
 import { path } from './subject.js'
 import { validatePayload } from './validatePayload.js'
 
-async function projectResultComputed({
+async function projectComputationFailed({
   rootCtx: { dataMapper },
-  scope: {
-    stateEdgeId,
-    result,
-    resultValue,
-    status,
-    updatedAt,
-  },
+  scope: { stateEdgeId, status, updatedAt },
 }) {
-  const projectedResult = typeof resultValue === 'string'
-    ? resultValue
-    : (result != null ? JSON.stringify(result) : '')
-
-  await dataMapper.edge.has_data_state.stateMachine_data.updateResultStatusUpdatedAt({
+  await dataMapper.edge.has_data_state.stateMachine_data.updateStatusUpdatedAt({
     edgeId: stateEdgeId,
-    result: projectedResult,
     status,
     updatedAt,
   })
@@ -32,6 +21,7 @@ export const spec = {
   decode: [
     decodeData([
       'stateEdgeId',
+      'stateId',
       'result',
       'resultValue',
       'status',
@@ -43,7 +33,7 @@ export const spec = {
   pre: [
     validatePayload,
   ],
-  handler: projectResultComputed,
+  handler: projectComputationFailed,
   post: [
     ackMessage,
   ],
